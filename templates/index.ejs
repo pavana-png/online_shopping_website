@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Authentication</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      /* background-image: url('https://img.freepik.com/premium-photo/fall-background-with-warm-sweaters-pile-knitted-clothes-autumn-winter-concept_176445-1865.jpg?w=996'); */
+      background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+ 
+      /* backdrop-filter: blur(3px); */
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .navbar {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: black;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+    }
+
+    .navbar .logo span {
+      font-size: 30px; /* Increase size for emoji */
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar ul li {
+      margin-left: 20px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .navbar ul li a:hover {
+      background-color: gray;
+    }
+
+    .container {
+      display: flex;
+      border: 2px solid  #625d5d;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      background: transparent;
+    }
+    
+    .form {
+      margin: 20px;
+      width: 300px;
+    }
+
+    .form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form button {
+      width: 100%;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form button:hover {
+      background-color: #218838;
+    }
+
+    .toggle {
+      text-align: center;
+      margin-top: 10px;
+      color: orange;
+    }
+
+    .toggle a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .toggle a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">
+      <b  style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b>
+    </div>
+    <ul>
+      <li><a href="/index">Home</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/help">Help</a></li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <!-- Registration Form -->
+    <div class="form" id="registerForm">
+      <h1 style="color:white; text-shadow: 2px 2px 4px white;">Register</h1>
+      <form action="/register" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <!-- Role Selection Dropdown -->
+  <label for="role">Select Role:</label>
+  <select name="role" id="role" required>
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+        <button type="submit">Sign Up</button>
+      </form>
+      <div class="toggle">
+        Already have an account? <a href="#" onclick="toggleForms('login')">Login</a>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form" id="loginForm" style="display: none;">
+      <h2>Login</h2>
+      <form action="/login" method="POST">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <div class="toggle">
+        Don't have an account? <a href="#" onclick="toggleForms('register')">Register</a>
+      </div>
+    </div>
+  </div>
+
+  
+  <script>
+    function toggleForms(form) {
+      if (form === 'login') {
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+      } else {
+        document.getElementById('registerForm').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

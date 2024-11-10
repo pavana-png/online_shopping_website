@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /* background-color: #f4f4f4; */
+      background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+      background-size: cover;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+
+    .order-summary {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 60px auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .order-details {
+      margin-top: 20px;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .order-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .delivery-date {
+      font-weight: bold;
+      color: green;
+    }
+
+    .address, .phone {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+    <ul>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/cart">Cart</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/help">Help</a></li>
+    </ul>
+</div>
+
+  <div class="order-summary">
+    <h2>Order Confirmation</h2>
+    
+    <div class="order-details">
+      <p><strong>Username:</strong> <%= userName %></p>
+      <p><strong>Address:</strong> <%= address %></p>
+      <p><strong>Phone Number:</strong> <%= phone %></p>
+      <p><strong>Expected Delivery Date:</strong> <span class="delivery-date"><%= deliveryDate %></span></p>
+
+      <% orderDetails.forEach(item => { %>
+        <div class="order-item">
+          <img src="<%= item.image %>" alt="<%= item.productName %>">
+          <div>
+            <p><strong>Product ID:</strong> <%= item.productId %></p>
+            <p><strong>Product Name:</strong> <%= item.productName %></p>
+            <p><strong>Price:</strong> $<%= item.price %></p>
+            <p><strong>Quantity:</strong> <%= item.quantity %></p>
+          </div>
+        </div>
+      <% }); %>
+
+    </div>
+  </div>
+
+</body>
+</html>

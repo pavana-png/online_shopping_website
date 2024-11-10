@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body{
+            background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+            background-size: cover;
+        }
+
+        * {
+            box-sizing: border-box;
+            color: white;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+
+        /* Main styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 60px; /* This ensures the content is below the navbar */
+            height: calc(100vh - 60px); /* Adjust height to fill the screen */
+        }
+
+        /* Left-side navigation (Sidebar) */
+        .sidebar {
+            width: 30%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            overflow-x: auto; /* Add scroll if content overflows */
+        }
+
+        .sidebar button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .sidebar button:hover {
+            background-color: #555;
+        }
+
+        /* Right-side content */
+        .content {
+            width: 70%;
+            padding: 20px;
+            overflow-y: auto;
+            overflow-x: auto; /* Add scroll if content overflows */
+        }
+
+        .content h2 {
+            margin-top: 0;
+            color:white;
+        }
+
+        .content-section {
+            display: none; /* Initially hide all content sections */
+        }
+
+        .content-section.active {
+            display: block; /* Show only the active section */
+        }
+
+        /* Ensuring body scroll */
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        .content-section { display: none; }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">
+            <b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER - Admin Panel</b>
+        </div>
+        <ul>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/addProduct">Products</a></li>
+
+            <% if (user) { %>
+                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li><a href="/login">Login</a></li>
+            <% } %>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar with Buttons -->
+        <div class="sidebar">
+            <button onclick="showSection('pendingOrders')">Orders Pending to Deliver</button>
+            <button onclick="showSection('todayOrders')">Orders Placed Today</button>
+            <button onclick="showSection('newUsers')">New Users Added Today</button>
+            <button onclick="showSection('revenue')">Weekly Revenue</button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content">
+            <h2>Dashboard Overview</h2>
+
+            <!-- Pending Orders Section -->
+            <div id="pendingOrders" class="content-section">
+                <h3>Orders Pending to Deliver</h3>
+                <table id="pendingOrdersTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Address</th>
+                            <th>Payment method</th>
+                            <th>Phone</th>
+                            <th>Delivery Date</th>
+                            <th>Order Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data goes here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Orders Placed Today Section -->
+            <div id="todayOrders" class="content-section">
+                <h3>Orders Placed Today</h3>
+                <table id="todayOrdersTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data goes here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- New Users Section -->
+            <div id="newUsers" class="content-section">
+                <h3>New Users Added Today</h3>
+                <table id="newUsersTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Hashed Password</th>
+                            <th>Role</th>
+                            <th>Join Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data goes here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Revenue Section -->
+<div id="revenue" class="content-section">
+    <h3>Weekly Revenue</h3>
+    <p id="revenueToday"></p> <!-- Revenue data goes here -->
+</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show the relevant section based on the button clicked
+        function showSection(sectionId) {
+            // Hide all content sections
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.style.display = 'none';
+            });
+
+            // Show the selected section
+            var selectedSection = document.getElementById(sectionId);
+            selectedSection.style.display = 'block';
+
+            // Fetch data based on section
+            if (sectionId === 'pendingOrders') {
+                fetchPendingOrders();
+            } else if (sectionId === 'todayOrders') {
+                fetchTodayOrders();
+            } else if (sectionId === 'newUsers') {
+                fetchNewUsers();
+            } else if (sectionId === 'revenue') {
+                fetchRevenueToday();
+            }
+        }
+
+        // Fetch pending orders
+        function fetchPendingOrders() {
+            fetch('/admin/pending-orders')
+                .then(response => response.json())
+                .then(data => displayDataInTable('pendingOrdersTable', data))
+                .catch(error => console.error('Error fetching pending orders:', error));
+        }
+
+        // Fetch orders placed today
+        function fetchTodayOrders() {
+            fetch('/admin/orders-today')
+                .then(response => response.json())
+                .then(data => displayDataInTable('todayOrdersTable', data))
+                .catch(error => console.error('Error fetching orders placed today:', error));
+        }
+
+        // Fetch new users added today
+        function fetchNewUsers() {
+            fetch('/admin/new-users-today')
+                .then(response => response.json())
+                .then(data => displayDataInTable('newUsersTable', data))
+                .catch(error => console.error('Error fetching new users:', error));
+        }
+
+        // Fetch revenue for today
+function fetchRevenueToday() {
+    fetch('/admin/revenue-today')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('revenueToday').textContent = `Total Revenue: Rs. ${data.weekly_revenue}`;
+        })
+        .catch(error => console.error('Error fetching revenue:', error));
+}
+
+// Call the function to fetch revenue when the page loads
+fetchRevenueToday();
+
+        // Generic function to display data in a table
+        function displayDataInTable(tableId, data) {
+            const tableBody = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Clear previous data
+
+            // Populate table with new data
+            data.forEach(item => {
+                const row = tableBody.insertRow();
+                Object.values(item).forEach(val => {
+                    const cell = row.insertCell();
+                    cell.textContent = val;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

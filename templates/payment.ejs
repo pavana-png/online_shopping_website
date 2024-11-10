@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <style>
+    /* Styles remain unchanged */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+
+    .payment-container {
+      background-color: white;
+      padding: 20px;
+      margin-top: 50px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-top: 10px;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+    .payment-method {
+      margin-top: 15px;
+    }
+    .payment-method label {
+      margin-right: 10px;
+    }
+    .payment-method input {
+      margin-right: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+    <ul>
+        <li><a href="/index">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/cart">Cart</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/help">Help</a></li>
+    </ul>
+</div>
+
+  <div class="payment-container">
+    <!-- Payment Method Selection -->
+    <h3>Welcome, <%= user.username ? user.username : user.email %>!</h3>
+    <h2>Payment Details</h2>
+
+    <form id="paymentForm" action="/place-order" method="POST">
+      <!-- Address Inputs -->
+      <div class="form-group">
+        <label for="building">Building Name/Number:</label>
+        <input type="text" id="building" name="building" required>
+      </div>
+      <div class="form-group">
+        <label for="street">Street Name/Number:</label>
+        <input type="text" id="street" name="street" required>
+      </div>
+      <div class="form-group">
+        <label for="area">Area:</label>
+        <input type="text" id="area" name="area" required>
+      </div>
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+      </div>
+      <div class="form-group">
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+      </div>
+      <div class="form-group">
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" name="pincode" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" name="phone" required>
+      </div>
+
+      <!-- Payment Method -->
+      <h3>Select Payment Method</h3>
+      <div>
+        <input type="radio" id="cod" name="paymentMethod" value="cod" checked>
+        <label for="cod">Cash on Delivery</label><br>
+        <input type="radio" id="onlinePayment" name="paymentMethod" value="online">
+        <label for="onlinePayment">Online Payment (Currently not available)</label>
+      </div>
+
+      <!-- Dynamic Button -->
+      <button type="submit" id="payBtn">Place Order</button>
+    </form>
+
+  </div>
+  
+  <script>
+    // Function to change button text based on payment method
+    function updateButtonText() {
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const payBtn = document.getElementById('payBtn');
+      
+      if (paymentMethod === 'cod') {
+        payBtn.innerHTML = "Place Order";
+      } else if (paymentMethod === 'online') {
+        payBtn.innerHTML = "Proceed to Payment";
+      }
+    }
+
+    // Add event listeners for radio buttons
+    document.getElementById('cod').addEventListener('change', updateButtonText);
+    document.getElementById('onlinePayment').addEventListener('change', updateButtonText);
+
+  </script>
+</body>
+</html>

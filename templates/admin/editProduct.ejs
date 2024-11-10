@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .navbar {
+      width: 100%;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar ul li {
+      margin-left: 20px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .navbar ul li a:hover {
+      background-color: #555;
+    }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+    <ul>
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="/admin/products/add">Adding</a></li>
+        <li><a href="/admin/products/edit/:id">Editing</a></li>
+        <li><a href="/admin/orders">Orders</a></li>
+    </ul>
+  </div>
+    <form action="/admin/products/add" method="POST">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <textarea name="description" placeholder="Product Description" required></textarea>
+        <input type="number" name="price" placeholder="Price" required>
+        <input type="number" name="stock" placeholder="Stock" required>
+        <input type="text" name="imageUrl" placeholder="Image URL" required>
+        <button type="submit">Add Product</button>
+    </form>
+    
+</body>
+</html>

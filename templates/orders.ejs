@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+
+        .orders-container {
+            margin-top: 80px;
+            width: 80%;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .order-item-details {
+            flex-grow: 1;
+            padding-left: 20px;
+        }
+
+        .order-item-details h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .order-item-details p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 18px;
+            border-top: 2px solid #333;
+            margin-top: 20px;
+        }
+
+        .status {
+            font-weight: bold;
+            color: green;
+        }
+
+        .status.pending {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+        <ul>
+            <li><a href="/index">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/help">Help</a></li>
+        </ul>
+    </div>
+
+   <!-- Orders Container -->
+    <div class="orders-container">
+        <h1>Your Orders</h1>
+
+        <!-- Display orders if they exist -->
+        <% if(orders && orders.length > 0) { %>
+            <% orders.forEach(order => { %>
+            <div class="order-item">
+                <!-- Product Image -->
+                <img src="<%= order.image_url %>" alt="<%= order.product_name %>">
+                
+                <div class="order-item-details">
+                    <h3>Order ID: <%= order.order_id %></h3>
+                    <p>Product: <%= order.product_name %></p>
+                    <p>Quantity: <%= order.quantity %></p>
+                    <p>Price: Rs.<%= Number(order.price).toFixed(2) %></p>
+                    <p>Delivery Date: <%= order.delivery_date %></p>
+                    <p class="status <%= order.status %>">
+                        Status: <%= order.status %>
+                    </p>
+                </div>
+            </div>
+            <% }) %>
+        <% } else { %>
+            <h2>No orders found.</h2>
+        <% } %>
+    </div>
+  
+</body>
+</html>

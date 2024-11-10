@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    
+        .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+    
+        .navbar .logo {
+            font-size: 24px;
+        }
+    
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+    
+        .navbar ul li {
+            margin-left: 20px;
+        }
+    
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+    
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+    
+        .product-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 60px; /* Ensure space for fixed navbar */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+    
+        .product-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            min-width: 200px; /* Prevent images from being too small */
+        }
+    
+        .product-image img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+        }
+    
+        .product-info {
+            flex: 1;
+            padding: 20px;
+            min-width: 300px;
+        }
+    
+        .product-info h1 {
+            margin-top: 0;
+        }
+    
+        .product-info p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    
+        .btn:hover {
+            background-color: #218838;
+        }
+    
+        /* Media Query for smaller screens */
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+    
+            .product-image {
+                max-width: 100%; /* Ensure the image doesn't overflow */
+            }
+    
+            .product-info {
+                padding: 10px; /* Reduce padding on smaller screens */
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+        <ul>
+            <li><a href="/index">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/help">Help</a></li>
+        </ul>
+    </div>
+
+    <div class="product-container">
+        <!-- Product Image on the left -->
+        <div class="product-image">
+            <img src="<%= product.image_url %>" alt="<%= product.name %>">
+        </div>
+
+        <!-- Product Information on the right -->
+        <div class="product-info">
+            <h1><%= product.name %></h1>
+            <p><strong>Price:</strong> Rs. <%= product.price %></p>
+            <p><strong>Description:</strong> <%= product.description %></p>
+            <p><strong>Stock:</strong> <%= product.stock_quantity %> available</p>
+            <form action="/add-to-cart/<%= product.id %>" method="POST">
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
+        </br>
+            <!-- Share Section -->
+<div class="share-container">
+    <!-- Share Link with Image -->
+    <a href="#" class="share-link" id="shareButton">
+        <img src="https://cdn-icons-png.flaticon.com/128/3925/3925158.png" alt="Share" style="width: 30px;" />
+        
+    </a> &nbsp&nbsp&nbsp
+
+    <!-- Direct share to WhatsApp -->
+    <a href="https://wa.me/?text=Check%20out%20this%20product:%20<%= encodeURIComponent(product.name) %>%20on%20this%20page:%20<%= encodeURIComponent(req.protocol + '://' + req.get('host') + req.originalUrl) %>" target="_blank" class="share-link">
+        <img src="https://cdn4.iconfinder.com/data/icons/logos-brands-7/512/whatsapp_logo-64.png" alt="WhatsApp" style="width: 35px;" />
+    </a>
+</div>
+</div>
+<script>
+    document.getElementById('shareButton').addEventListener('click', async function(event) {
+        event.preventDefault();  // Prevent link navigation
+        const shareData = {
+            title: '<%= product.name %>',
+            text: 'Check out this product!',
+            url: window.location.href  // Get the current page URL
+        };
+
+        try {
+            if (navigator.share) {
+                // Use Web Share API
+                await navigator.share(shareData);
+                console.log('Shared successfully');
+            } else {
+                // Fallback: Copy to clipboard if sharing is not supported
+                copyToClipboard(window.location.href);
+                alert('URL copied to clipboard!');
+            }
+        } catch (err) {
+            console.error('Error sharing:', err);
+        }
+    });
+
+    // Function to copy the URL to clipboard
+    function copyToClipboard(text) {
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = text;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+    }
+</script>
+
+            
+</body>
+</html>

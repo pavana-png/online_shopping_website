@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center</title>
+    <style>
+        /* styles.css */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+            background-size: cover;
+            text-align: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin-left: 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background-color: #555;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 40px; /* Adds space below the fixed navbar */
+        }
+
+        h1 {
+            margin-top: 70px; /* Adjust if needed */
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+
+        p {
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        input[type="text"] {
+            width: 300px; /* Fixed width for the input box */
+            padding: 10px; /* Adds padding inside the input */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px; /* Increases font size */
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .success-message {
+            margin-top: 10px;
+            color: green; /* Change the color as desired */
+        }        
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+        <ul>
+            <li><a href="/index">Home</a></li>
+            <li><a href="/products">Products</a></li>
+            <li><a href="/cart">Cart</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/help">Help</a></li>
+        </ul>
+    </div>
+
+    <h1>Customer Support</h1>
+    <div class="container">
+        <div class="order-cancellation">
+            <h2>Order Cancellation</h2>
+            <p>If you wish to cancel your order, please enter your Order ID below:</p>
+
+<% if (userLoggedIn) { %>
+    <!-- If the user is logged in -->
+    <form id="cancelOrderForm" action="/cancel-order" method="POST">
+        <input type="text" name="orderId" placeholder="Enter your Order ID" />
+        <button type="submit">Cancel Order</button>
+    </form>
+    <div id="message">
+        <% if (message ) { %> <!-- Check if message is defined and has content -->
+            <p class="success-message"><%= message %></p>
+        <% } %>
+    </div>
+    
+<% } else { %>
+    <!-- If the user is not logged in -->
+    <p>Please <a href="/login">log in</a> to cancel your order.</p>
+<% } %>
+
+
+            <!-- <div id="messageContainer" class="success-message"></div> -->
+        </div>
+        
+        <div class="contact-info">
+            <h2>Contact Us</h2>
+            <p>If you have any queries or need assistance, please feel free to reach out:</p>
+            <p>Email: support@example.com</p>
+            <p>Phone: +1 234 567 890</p>
+        </div>
+        
+        <div class="headquarters">
+            <h2>Headquarters Address</h2>
+            <p>123 Main St, Suite 500</p>
+            <p>Your City, Your State, Your Country</p>
+            <p>Postal Code: 123456</p>
+        </div>
+    </div>
+
+    
+</body>
+</html>

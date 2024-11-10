@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Products (Admin)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow-y: hidden;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar ul li {
+      margin-left: 20px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .navbar ul li a:hover {
+      background-color: #555;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 80px;
+      width: 100%;
+      max-width: 1200px;
+      height: calc(100vh - 100px); /* Full viewport height minus navbar */
+      padding: 20px;
+    }
+
+    /* Left side: Product list with search */
+    .left-section {
+      flex: 1;
+      margin-right: 20px;
+      padding: 20px;
+      /* background-color: rgba(255, 255, 255, 0.9); */
+      border-radius: 10px;
+      overflow-y: scroll;  /* Enable scrolling */
+      max-height: 100%;    /* Full height of container */
+    }
+
+    .left-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(246, 242, 242, 0.989);
+      border-radius: 10px;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 180px;
+      margin: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    /* Right side: Form */
+    .right-section {
+  width: 400px; /* Fixed width */
+  height: auto; /* Change this to auto for testing */
+  padding: 20px;
+  /* background-color: rgba(255, 255, 255, 0.9); */
+  border-radius: 10px;
+  overflow-y:auto; /* Change this to 'auto' if necessary */
+}
+
+    .form-container {
+  margin-bottom: 20px; /* Space between forms */
+  padding: 15px; /* Added padding for better spacing */
+  /* background-color: rgba(255, 255, 255, 0.95); */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(246, 242, 242, 0.989);
+}
+
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .form-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-container input {
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+  background-color: #dc3545; /* Red for delete button */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.form-container button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-section,
+      .right-section {
+        margin-right: 0;
+        margin-bottom: 20px;
+        max-width: 100%;
+        height: auto; 
+        /* Remove height constraint for smaller screens */
+      }
+
+      .right-section {
+        width: 100%;
+      }
+
+      .product-details-section {
+      margin-top: 20px;
+      padding: 20px;
+      /* background-color: #f8f8f8; */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .product-details {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .product-details img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product-info {
+      max-width: 600px;
+    }
+    .product-info h3 {
+      margin: 0;
+    }
+    .product-info p {
+      margin: 5px 0;
+    }
+    
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER - Admin Panel</b></div>
+    <ul>
+      <li><a href="/admin/dashboard">Dashboard</a></li>
+      <li><a href="/admin/addProduct">Products</a></li>
+      
+      <% if (user) { %>
+        <li><a href="/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/login">Login</a></li>
+      <% } %>
+    </ul>
+  </div>
+
+    <!-- Main content -->
+    <div class="container">
+
+        <!-- Left Section: Product List with Search -->
+        <div class="left-section">
+          <h2>All Products</h2>
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by Product ID..." oninput="searchProduct()">
+          </div>
+    
+          <!-- Product Cards -->
+          <div class="card-container" id="productList">
+            <% products.forEach(product => { %>
+              <div class="card" id="product-<%= product.id %>" onclick="displayProduct('<%= product.id %>')">
+                <img src="<%= product.image_url %>" alt="<%= product.name %>">
+                <h3><%= product.name %></h3>
+                <p>Price: Rs.<%= Number(product.price).toFixed(2) %></p>
+                <p><%= product.description %></p>
+                <p>Stock available: <%= product.stock %></p>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+    
+        <!-- Right Section: Add/Edit Form -->
+<div class="right-section">
+    <div class="form-container">
+      <h2>Add Product</h2>
+      <!-- Add Product Form -->
+<form action="/admin/products/add" method="POST" id="addProductForm">
+  <input type="hidden" name="id" id="addProductId" placeholder="Product ID">
+  <input type="text" name="name" id="addProductName" placeholder="Product Name" required>
+  <input type="number" name="price" id="addProductPrice" placeholder="Product Price (Rs.)" required>
+  <input type="number" name="stock" id="addProductStock" placeholder="Product Stock" required>
+  <input type="text" name="description" id="addProductDescription" placeholder="Product Description" required>
+  <input type="text" name="image_url" id="addProductImage" placeholder="Product Image URL" required>
+  <button type="submit">Add Product</button>
+</form>
+
+
+
+    </div>
+
+    <div class="form-container">
+      <h2>Update Product</h2>
+<!-- Update Product Form -->
+<form action="/admin/products/update" method="POST" id="updateProductForm">
+  <input type="number" name="id" id="updateProductId" placeholder="Product ID">
+  <input type="text" name="name" id="updateProductName" placeholder="Product Name" required>
+  <input type="number" name="price" id="updateProductPrice" placeholder="Product Price (Rs.)" required>
+  <input type="number" name="stock" id="updateProductStock" placeholder="Product Stock" required>
+  <input type="text" name="description" id="updateProductDescription" placeholder="Product Description" required>
+  <input type="text" name="image_url" id="updateProductImage" placeholder="Product Image URL" required>
+  <button type="submit">Update Product</button>
+</form>
+    </div>
+  
+<!-- Delete Product Form -->
+<div class="form-container">
+  <h2>Delete Product</h2>
+  <form id="deleteForm" action="/admin/products/delete" method="POST">
+      <input type="number" id="deleteProductId" name="id" placeholder="Product ID" required>
+      <button type="submit">Delete Product</button>
+  </form>
+</div>
+
+      
+  </div>
+  
+    
+      </div>
+    
+      <!-- New Section: Display Product Details -->
+      <div class="product-details-section" id="productDetailsSection" style="display: none;">
+        <h2>Selected Product Details</h2>
+        <div class="product-details" id="productDetails">
+          <!-- Content will be dynamically populated here -->
+        </div>
+      </div>
+    
+      <!-- JavaScript for handling product search and display -->
+      <script>
+        // Function to filter products by ID (or name if needed)
+        function searchProduct() {
+          const input = document.getElementById('searchInput').value.toLowerCase();
+          const productList = document.getElementById('productList');
+          const cards = productList.getElementsByClassName('card');
+    
+          // Loop through all products and hide those that don't match the search
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            const productId = card.id.split('-')[1]; // Assuming id is of format 'product-1', 'product-2', etc.
+    
+            if (productId.toLowerCase().includes(input)) {
+              card.style.display = ''; // Show the matching product
+            } else {
+              card.style.display = 'none'; // Hide products that don't match
+            }
+          }
+    
+          // If the input is a valid product ID, show the product details below
+          if (input) {
+            displayProduct(input);
+          }
+        }
+    
+        // Function to display the product details in the product details section
+        function displayProduct(productId) {
+          // Find the product data (you can fetch it from the server or get it from the DOM if already available)
+          const productCard = document.getElementById(`product-${productId}`);
+          if (productCard) {
+            const productName = productCard.getElementsByTagName('h3')[0].textContent;
+            const productPrice = productCard.getElementsByTagName('p')[0].textContent.replace('Price: Rs.', '');
+            const productDescription = productCard.getElementsByTagName('p')[1].textContent;
+            const productStock = productCard.getElementsByTagName('p')[2].textContent.replace('Stock available: ', '');
+            const productImage = productCard.getElementsByTagName('img')[0].src;
+    
+           
+          }
+        }
+
+        
+  function updateProduct(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Get product details from the form
+    const productId = document.getElementById('productId').value;
+    const productName = document.getElementById('productName').value;
+    const productPrice = document.getElementById('productPrice').value;
+    const productStock = document.getElementById('productStock').value;
+    const productDescription = document.getElementById('productDescription').value;
+    const productImage = document.getElementById('productImage').value;
+
+    // Create a data object to send to the server
+    const updatedProduct = {
+      id: productId,
+      name: productName,
+      price: productPrice,
+      stock: productStock,
+      description: productDescription,
+      image_url: productImage
+    };
+
+    fetch('/admin/products/update', {
+    method: 'POST',
+    body: formData
+})
+.then(response => {
+    console.log('Fetch response received:', response); // Debugging fetch response
+    if (response.ok) {
+        return response.text();
+    }
+    throw new Error('Error updating product');
+})
+.then(result => {
+    console.log('Product updated successfully:', result); // Debugging success
+    alert('Product updated successfully!');
+    window.location.reload();
+})
+.catch(error => {
+    console.error('Error occurred:', error); // Debugging error
+    alert('Error updating product: ' + error.message);
+});
+  }
+
+  function deleteProduct(event) {
+  event.preventDefault(); // Prevent form submission
+  
+  const productId = document.getElementById('deleteProductId').value;
+
+  // Ensure productId is not empty
+  if (!productId) {
+    alert("Please enter a valid Product ID.");
+    return;
+  }
+
+  // Send a request to the server
+  fetch('/admin/products/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id: productId }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Error deleting product: ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      alert(data.message);
+      document.getElementById('deleteProductId').value = "";
+
+      // Remove the deleted product from the DOM
+      const productRow = document.getElementById(`product-${productId}`);
+      if (productRow) {
+        productRow.remove(); // Remove the product row from the page
+      }
+    })
+    .catch((error) => {
+      alert('Failed to delete product. ' + error.message);
+      console.error('Fetch error:', error);
+    });
+}
+
+
+</script>
+
+
+</body>
+</html>

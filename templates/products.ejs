@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-72292.jpg?w=1060&t=st=1728823971~exp=1728824571~hmac=f97bb35c4371cdcee062f7b1e0057c04ca2aa681acc005a41ebeda9e23d048a4');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .navbar {
+      width: 100%;
+      background-color: black;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+    }
+
+    .navbar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .navbar ul li {
+      margin-left: 20px;
+    }
+
+    .navbar ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .navbar ul li a:hover {
+      background-color: #555;
+    }
+
+    /* Header Container */
+    .header-container {
+      margin-top: 60px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      justify-content: space-between;
+    }
+
+    .marquee {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee marquee {
+      display: inline-block;
+      padding: 0 20px;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      margin-left: 20px; /* Space between marquee and search bar */
+    }
+
+    .search-container input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .search-container button {
+      padding: 10px;
+      margin-left: 5px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-container button:hover {
+      background-color: #218838;
+    }
+
+    /* Card container */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    /* Card styling */
+    .card {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 300px;
+      margin: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-details {
+      padding: 15px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .card p {
+      color: #555;
+    }
+
+    .card button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .card button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo"><b style="text-shadow: 2px 2px 4px rgb(255, 255, 255);">🧶 CROCHET CORNER</b></div>
+    <ul>
+      <li><a href="/index">Home</a></li>
+      <li><a href="/products">Products</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/help">Help</a></li>
+      <% if (user) { %>
+        <li><a href="/logout">Logout</a></li>
+      <% } else { %>
+        <li><a href="/login">Login</a></li>
+      <% } %>
+    </ul>
+  </div>
+
+  <!-- Header Container with Moving Statement and Search Bar -->
+  <div class="header-container">
+    <div class="marquee">
+      <marquee behavior="scroll" direction="left">
+        <h2 style="color:white; text-shadow: 2px 2px 4px rgb(255, 255, 255);">
+            Welcome to our Crochet Corner! Check out our latest products!
+        </h2>
+      </marquee>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search by Product Name or ID" onkeyup="filterProducts()">
+      <!-- <button onclick="filterProducts()">Search</button> -->
+    </div>
+
+    <!-- Cart link -->
+   <a href="/orders">📦</a>
+    <a href="/cart">🛒</a>
+    
+    <!-- Display the user's name if logged in -->
+    <% if (user) { %>
+      <span style="color:white;">Welcome, <%= user %>!</span>
+    <% } %>
+  </div>
+
+  <!-- Product Cards -->
+  <div class="card-container" id="productCards">
+    <% products.forEach(product => { %>
+      <div class="card">
+        <img src="<%= product.image_url %>" alt="<%= product.name %>">
+        <div class="card-details">
+          <h3><%= product.name %></h3>
+          <p>Price: Rs.<%= Number(product.price).toFixed(2) %></p>
+          <p><%= product.description %></p>
+          
+          <!-- Add to Cart Form -->
+          <form action="/cart/add" method="POST">
+            <input type="hidden" name="productId" value="<%= product.id %>">
+            <button type="submit">Add to Cart</button>
+            <!-- View Details Button -->
+            <a href="/product/<%= product.id %>">
+              <button type="button">View</button>
+            </a>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <script>
+    function filterProducts() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.card-container .card');
+
+      cards.forEach(card => {
+        const productName = card.querySelector('h3').textContent.toLowerCase();
+        const productId = card.querySelector('input[name="productId"]').value.toLowerCase();
+
+        if (productName.includes(input) || productId.includes(input)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
